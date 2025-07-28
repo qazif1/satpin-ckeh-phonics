@@ -1,11 +1,14 @@
 const words = [
+  // SATPIN words
   "sat", "sit", "sip", "pin", "pan", "pat",
-  "tip", "tin", "tap", "nap", "nip", "net",
-  "pet", "pen", "pit", "pin", "tan", "tap",
-  
+  "tip", "tin", "tap", "nap", "net", "pet",
+  "pen", "pit", "pin", "tan", "tap", "sit",
+
+  // C/K words
   "cat", "cap", "can", "kit", "kin", "kip",
   "kick", "tick", "pick", "pack", "neck", "kick",
-  
+
+  // E/H words
   "hen", "hut", "hit", "hat", "at", "is"
 ];
 
@@ -20,7 +23,6 @@ const wordSentences = {
   tin: "This is a tin can.",
   tap: "Turn off the tap.",
   nap: "I will take a nap.",
-  nip: "The puppy will nip.",
   net: "The fish is in the net.",
   pet: "I have a pet cat.",
   pen: "This is my pen.",
