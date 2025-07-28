@@ -1,48 +1,51 @@
 const words = [
-  "cat", "kit", "cap", "cot", "kick", "can", "cup",
-  "set", "pen", "pet", "net", "ten", "hen", "men", "red",
-  "hat", "hop", "hit", "hut", "hot", "him",
-  "sat", "pin", "tap", "sip", "tan", "nap", "sit", "pat",
-  "pit", "tip", "pan", "tin", "sap", "nip", "ant"
+  // SATPIN words
+  "sat", "sit", "sip", "pin", "pan", "pat",
+  "tip", "tin", "tap", "nap", "nip", "net",
+  "pet", "pen", "pit", "pin", "tan", "tap",
+  
+  // C/K words
+  "cat", "cap", "can", "kit", "kin", "kip",
+  "kick", "tick", "pick", "pack", "neck", "kick",
+  
+  // E/H words
+  "hen", "hip", "hit", "hat", "at", "is"
 ];
 
 const wordSentences = {
-  cat: "The cat is black.",
-  kit: "This is a first-aid kit.",
-  cap: "Ben has a cap.",
-  cot: "The baby sleeps on the cot.",
-  kick: "Kick the ball hard.",
-  can: "I have a can of juice.",
-  cup: "The cup is blue.",
-  set: "Set the table for dinner.",
-  pen: "This is my pen.",
-  pet: "I have a pet dog.",
-  net: "The fish is in the net.",
-  ten: "I can count to ten.",
-  hen: "The hen lays eggs.",
-  men: "Three men are here.",
-  red: "The ball is red.",
-  hat: "Put on the hat.",
-  hop: "The frog can hop.",
-  hit: "Hit the ball with the bat.",
-  hut: "They live in a hut.",
-  hot: "The tea is hot.",
-  him: "I see him over there.",
   sat: "I sat on the mat.",
-  pin: "The pin is sharp.",
-  tap: "Turn off the tap.",
-  sip: "I sip some water.",
-  tan: "He got a tan on holiday.",
-  nap: "I will take a nap.",
   sit: "Please sit here.",
-  pat: "Pat the dog gently.",
-  pit: "A cherry has a pit.",
-  tip: "She gave a tip.",
+  sip: "I sip some tea.",
+  pin: "The pin is sharp.",
   pan: "The pan is hot.",
+  pat: "Pat the dog gently.",
+  tip: "She gave a tip.",
   tin: "This is a tin can.",
-  sap: "The sap is sticky.",
+  tap: "Turn off the tap.",
+  nap: "I will take a nap.",
   nip: "The puppy will nip.",
-  ant: "An ant is small."
+  net: "The fish is in the net.",
+  pet: "I have a pet cat.",
+  pen: "This is my pen.",
+  pit: "A cherry has a pit.",
+  tan: "He got a tan.",
+  cat: "The cat is black.",
+  cap: "Ben has a cap.",
+  can: "I can do it.",
+  kit: "This is a kit.",
+  kin: "He is my kin.",
+  kip: "I had a short kip.",
+  kick: "Kick the ball.",
+  tick: "Tick the box.",
+  pick: "Pick a card.",
+  pack: "Pack your bag.",
+  neck: "Touch your neck.",
+  hen: "The hen lays eggs.",
+  hip: "Put your hands on your hip.",
+  hit: "Hit the ball.",
+  hat: "Wear a hat.",
+  at: "Look at me.",
+  is: "This is fun."
 };
 
 let currentWord = "";
@@ -71,7 +74,7 @@ function playAudio(fileName) {
       console.error(`Error: Could not load ${fileName}`);
       resolve();
     };
-    audio.onended = () => setTimeout(resolve, 250); // Add 250ms gap
+    audio.onended = () => setTimeout(resolve, 250); // 0.25s gap
     audio.play().catch((err) => {
       console.error(`Playback error:`, err);
       resolve();
