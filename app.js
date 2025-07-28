@@ -48,7 +48,6 @@ const wordSentences = {
 let currentWord = "";
 let currentIndex = 0;
 
-// Display a new word
 function displayWord() {
   if (currentIndex >= words.length) {
     alert("You have completed all words!");
@@ -64,80 +63,68 @@ function displayWord() {
   updateProgressBar();
 }
 
-// Play letter sounds with error handling
-function playSounds() {
-  const letters = currentWord.split("");
-  let i = 0;
-
-  function playNext() {
-    if (i < letters.length) {
-      const fileName = `sound_${letters[i]}.mp3`;
-      console.log(`Trying to play: ${fileName}`);
-
-      const audio = new Audio(fileName);
-      audio.onerror = function () {
-        console.error(`Error: Could not load sound file ${fileName}`);
-        alert(`Missing or unreadable file: ${fileName}`);
-      };
-
-      audio.oncanplaythrough = function () {
-        console.log(`Playing: ${fileName}`);
-        audio.play().catch(err => console.error(`Playback error for ${fileName}:`, err));
-      };
-
-      i++;
-      setTimeout(playNext, 1200); // Delay before playing the next letter
-    }
-  }
-
-  setTimeout(playNext, 500); // Initial delay before first letter
+// Utility to play audio and wait until it finishes
+function playAudio(fileName) {
+  return new Promise((resolve) => {
+    const audio = new Audio(fileName);
+    audio.onerror = () => {
+      console.error(`Error: Could not load ${fileName}`);
+      resolve();
+    };
+    audio.onended = () => setTimeout(resolve, 250); // Add 250ms gap
+    audio.play().catch((err) => {
+      console.error(`Playback error:`, err);
+      resolve();
+    });
+  });
 }
 
-// Show letters and play letter sounds
+// Play each letter sound sequentially
+async function playSounds() {
+  const letters = currentWord.split("");
+  for (let letter of letters) {
+    const fileName = `sound_${letter}.mp3`;
+    console.log(`Playing: ${fileName}`);
+    await playAudio(fileName);
+  }
+}
+
+// Show letters with replay buttons and sequential highlighting
 function breakdownLetters() {
   const container = document.getElementById("wordContainer");
   container.innerHTML = "";
 
   for (let letter of currentWord) {
-    const div = document.createElement("div");
-    div.className = "letter spaced";
-    div.innerHTML = letter.toUpperCase() + '<div class="dot"></div>';
-    container.appendChild(div);
+    const letterContainer = document.createElement("div");
+    letterContainer.className = "letterContainer";
+
+    const letterDiv = document.createElement("div");
+    letterDiv.className = "letter";
+    letterDiv.innerHTML = letter.toUpperCase() + '<div class="dot"></div>';
+
+    const button = document.createElement("button");
+    button.className = "letterSoundBtn";
+    button.textContent = "🔊";
+    button.onclick = () => playAudio(`sound_${letter}.mp3`);
+
+    letterContainer.appendChild(letterDiv);
+    letterContainer.appendChild(button);
+    container.appendChild(letterContainer);
   }
 
+  // Highlight letters sequentially
   const letters = document.querySelectorAll(".letter");
-  let i = 0;
-
-  function highlightLetter() {
-    if (i < letters.length) {
-      const letter = letters[i].textContent.trim().toLowerCase();
-      const dot = letters[i].querySelector(".dot");
+  (async function highlight() {
+    for (let letterDiv of letters) {
+      const letter = letterDiv.textContent.trim().toLowerCase();
+      const dot = letterDiv.querySelector(".dot");
       dot.style.display = "block";
-
-      const fileName = `sound_${letter}.mp3`;
-      console.log(`Trying to play: ${fileName}`);
-      const audio = new Audio(fileName);
-      audio.onerror = function () {
-        console.error(`Error: Could not load sound file ${fileName}`);
-      };
-
-      audio.oncanplaythrough = function () {
-        console.log(`Playing: ${fileName}`);
-        audio.play().catch(err => console.error(`Playback error for ${fileName}:`, err));
-      };
-
-      setTimeout(() => {
-        dot.style.display = "none";
-        i++;
-        highlightLetter();
-      }, 1200);
+      await playAudio(`sound_${letter}.mp3`);
+      dot.style.display = "none";
     }
-  }
-
-  setTimeout(highlightLetter, 500); // Initial delay
+  })();
 }
 
-// Show image, full word, and sentence
 function showImageAndSentence() {
   document.getElementById("answer").textContent = currentWord.toUpperCase();
   document.getElementById("answer").style.visibility = "visible";
@@ -145,26 +132,21 @@ function showImageAndSentence() {
   document.getElementById("sentence").style.display = "block";
 
   const image = document.getElementById("wordImage");
-  image.src = `${currentWord}-min.png`; // Ensure this image exists
+  image.src = `${currentWord}-min.png`;
   image.style.display = "block";
   image.style.opacity = "0";
-  setTimeout(() => {
-    image.style.opacity = "1";
-  }, 50);
+  setTimeout(() => { image.style.opacity = "1"; }, 50);
 }
 
-// Move to next word
 function nextWord() {
   currentIndex++;
   displayWord();
 }
 
-// Progress bar update
 function updateProgressBar() {
   const progress = ((currentIndex + 1) / words.length) * 100;
   document.getElementById("progressBar").style.width = progress + "%";
   document.getElementById("progressText").textContent = `Word ${currentIndex + 1} of ${words.length}`;
 }
 
-// Initialize game
 displayWord();
