@@ -1,0 +1,136 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.game-container {
+  max-width: 700px;
+  width: 100%;
+}
+
+#progressBarContainer {
+  width: 80%;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin: 10px auto;
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0;
+  height: 100%;
+  background-color: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+#progressText {
+  font-size: 18px;
+  margin-top: 5px;
+  color: #333;
+}
+
+.buttons {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+#breakdownBtn {
+  background-color: #3498db;
+}
+
+#breakdownBtn:hover {
+  background-color: #2980b9;
+}
+
+#showImageBtn {
+  background-color: #f39c12;
+}
+
+#showImageBtn:hover {
+  background-color: #e67e22;
+}
+
+.word-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px 0 20px;
+}
+
+.letter {
+  font-size: 80px;
+  position: relative;
+  color: #444;
+}
+
+.letter.spaced {
+  margin: 0 20px;
+}
+
+.dot {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  background: red;
+  border-radius: 50%;
+  display: none;
+}
+
+#answerSection {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#answer {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  visibility: hidden;
+}
+
+#sentence {
+  font-size: 22px;
+  color: #555;
+  margin: 10px 0 20px;
+  display: none;
+}
+
+#wordImage {
+  max-width: 350px;
+  margin: 20px auto 0;
+  display: none;
+  transition: opacity 0.5s ease;
+}
