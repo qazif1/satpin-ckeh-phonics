@@ -1,15 +1,12 @@
 const words = [
-  // SATPIN words
   "sat", "sit", "sip", "pin", "pan", "pat",
   "tip", "tin", "tap", "nap", "nip", "net",
   "pet", "pen", "pit", "pin", "tan", "tap",
   
-  // C/K words
   "cat", "cap", "can", "kit", "kin", "kip",
   "kick", "tick", "pick", "pack", "neck", "kick",
   
-  // E/H words
-  "hen", "hip", "hit", "hat", "at", "is"
+  "hen", "hut", "hit", "hat", "at", "is"
 ];
 
 const wordSentences = {
@@ -41,7 +38,7 @@ const wordSentences = {
   pack: "Pack your bag.",
   neck: "Touch your neck.",
   hen: "The hen lays eggs.",
-  hip: "Put your hands on your hip.",
+  hut: "This is a hut.",
   hit: "Hit the ball.",
   hat: "Wear a hat.",
   at: "Look at me.",
@@ -66,7 +63,6 @@ function displayWord() {
   updateProgressBar();
 }
 
-// Utility to play audio and wait until it finishes
 function playAudio(fileName) {
   return new Promise((resolve) => {
     const audio = new Audio(fileName);
@@ -74,7 +70,7 @@ function playAudio(fileName) {
       console.error(`Error: Could not load ${fileName}`);
       resolve();
     };
-    audio.onended = () => setTimeout(resolve, 250); // 0.25s gap
+    audio.onended = () => setTimeout(resolve, 250);
     audio.play().catch((err) => {
       console.error(`Playback error:`, err);
       resolve();
@@ -82,7 +78,6 @@ function playAudio(fileName) {
   });
 }
 
-// Play each letter sound sequentially
 async function playSounds() {
   const letters = currentWord.split("");
   for (let letter of letters) {
@@ -92,7 +87,6 @@ async function playSounds() {
   }
 }
 
-// Show letters with replay buttons and sequential highlighting
 function breakdownLetters() {
   const container = document.getElementById("wordContainer");
   container.innerHTML = "";
@@ -115,7 +109,6 @@ function breakdownLetters() {
     container.appendChild(letterContainer);
   }
 
-  // Highlight letters sequentially
   const letters = document.querySelectorAll(".letter");
   (async function highlight() {
     for (let letterDiv of letters) {
